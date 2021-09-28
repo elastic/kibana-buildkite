@@ -11,7 +11,7 @@ resource "buildkite_pipeline" "performance_daily" {
       command: buildkite-agent pipeline upload .buildkite/pipelines/performance_daily.yml
   EOT
 
-  default_branch       = ""
+  default_branch       = "implement/performance-daily-job"
   branch_configuration = join(" ", local.current_dev_branches)
 }
 
