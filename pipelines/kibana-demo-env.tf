@@ -1,7 +1,3 @@
-locals {
-  demo_env_branches = ["master", "7.x"]
-}
-
 resource "buildkite_pipeline" "demo-env" {
   name        = "kibana / demo-environment"
   description = "Creates/updates demo environment for kibana with example plugins"
@@ -16,7 +12,7 @@ resource "buildkite_pipeline" "demo-env" {
   EOT
 
   default_branch       = "master"
-  branch_configuration = join(" ", local.demo_env_branches)
+  branch_configuration = join(" ", local.current_dev_branches)
 
   provider_settings {
     build_branches      = false
@@ -30,7 +26,7 @@ resource "buildkite_pipeline" "demo-env" {
 }
 
 resource "buildkite_pipeline_schedule" "demo-env-daily" {
-  for_each = toset(local.demo_env_branches)
+  for_each = toset(local.current_dev_branches)
 
   pipeline_id = buildkite_pipeline.demo-env.id
   label       = "Daily build"
