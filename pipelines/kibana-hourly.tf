@@ -11,7 +11,7 @@ resource "buildkite_pipeline" "hourly" {
       command: buildkite-agent pipeline upload .buildkite/pipelines/hourly.yml
   EOT
 
-  default_branch       = "master"
+  default_branch       = "main"
   branch_configuration = join(" ", local.hourly_branches)
 
   provider_settings {

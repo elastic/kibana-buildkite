@@ -12,7 +12,7 @@ resource "buildkite_pipeline" "pull-request" {
       command: .buildkite/scripts/pipelines/pull_request/pipeline.sh
   EOT
 
-  default_branch       = "master"
+  default_branch       = "main"
   branch_configuration = ""
 
   cancel_intermediate_builds = true

@@ -11,7 +11,7 @@ resource "buildkite_pipeline" "es_snapshot_build" {
       command: buildkite-agent pipeline upload .buildkite/pipelines/es_snapshots/build.yml
   EOT
 
-  default_branch       = "master"
+  default_branch       = "main"
   branch_configuration = join(" ", local.current_dev_branches)
 
   provider_settings {
@@ -36,7 +36,7 @@ resource "buildkite_pipeline" "es_snapshot_verify" {
       command: buildkite-agent pipeline upload .buildkite/pipelines/es_snapshots/verify.yml
   EOT
 
-  default_branch       = "master"
+  default_branch       = "main"
   branch_configuration = join(" ", local.current_dev_branches)
 
   provider_settings {
@@ -61,7 +61,7 @@ resource "buildkite_pipeline" "es_snapshot_promote" {
       command: buildkite-agent pipeline upload .buildkite/pipelines/es_snapshots/promote.yml
   EOT
 
-  default_branch       = "master"
+  default_branch       = "main"
   branch_configuration = join(" ", local.current_dev_branches)
 
   provider_settings {

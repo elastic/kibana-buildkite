@@ -11,7 +11,7 @@ resource "buildkite_pipeline" "on-merge" {
       command: buildkite-agent pipeline upload .buildkite/pipelines/on_merge.yml
   EOT
 
-  default_branch       = "master"
+  default_branch       = "main"
   branch_configuration = join(" ", local.current_dev_branches)
 
   provider_settings {

@@ -11,7 +11,7 @@ resource "buildkite_pipeline" "demo-env" {
       command: buildkite-agent pipeline upload .buildkite/pipelines/update_demo_env.yml
   EOT
 
-  default_branch       = "master"
+  default_branch       = "main"
   branch_configuration = join(" ", local.current_dev_branches)
 
   provider_settings {
