@@ -12,7 +12,7 @@ resource "buildkite_pipeline" "demo-env" {
   EOT
 
   default_branch       = "main"
-  branch_configuration = join(" ", local.current_dev_branches)
+  branch_configuration = join(" ", setsubtract(local.current_dev_branches, ["7.15"]))
 
   provider_settings {
     build_branches      = false
