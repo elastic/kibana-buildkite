@@ -17,10 +17,13 @@ resource "buildkite_pipeline" "performance_daily" {
 }
 
 resource "buildkite_pipeline_schedule" "performance_daily_ci" {
-  for_each = local.daily_branches
+  for_each = toset(local.current_dev_branches)
 
   pipeline_id = buildkite_pipeline.performance_daily.id
   label       = "Nightly build"
   cronline    = "0 9 * * * Europe/Berlin"
   branch      = each.value
+  env         = {
+    ITERATION_COUNT_ENV = "20"
+  }
 }
