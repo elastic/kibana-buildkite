@@ -16,11 +16,11 @@ resource "buildkite_pipeline" "performance_daily" {
   branch_configuration = join(" ", local.current_dev_branches)
 }
 
-# resource "buildkite_pipeline_schedule" "performance-daily-ci" {
-#   for_each = local.daily_branches
+resource "buildkite_pipeline_schedule" "performance_daily_ci" {
+  for_each = local.daily_branches
 
-#   pipeline_id = buildkite_pipeline.daily.id
-#   label       = "Daily build"
-#   cronline    = "0 9 * * * Europe/Berlin"
-#   branch      = each.value
-# }
+  pipeline_id = buildkite_pipeline.performance_daily.id
+  label       = "Nightly build"
+  cronline    = "0 9 * * * Europe/Berlin"
+  branch      = each.value
+}
