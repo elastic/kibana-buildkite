@@ -1,0 +1,3 @@
+---
+- name: restart-buildkite
+  command: /usr/local/bin/brew services restart buildkite/buildkite/buildkite-agent

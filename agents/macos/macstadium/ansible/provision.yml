@@ -1,0 +1,10 @@
+---
+- hosts: prod
+  vars_files:
+    - group_vars/all.yml
+    - group_vars/homebrew.yml
+  user: "{{default_username}}"
+  # become: yes
+  roles:
+    - role: common
+      tags: common

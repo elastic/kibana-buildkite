@@ -1,0 +1,13 @@
+name=macos-intel-01
+build-path="/usr/local/var/buildkite-agent/builds"
+hooks-path="/usr/local/var/buildkite-agent/hooks"
+plugins-path="/usr/local/var/buildkite-agent/plugins"
+experiment="git-mirrors,output-redactor,ansi-timestamps,normalised-upload-paths,resolve-commit-after-checkout"
+git-mirrors-path="/usr/local/etc/buildkite-agent/git-mirrors"
+git-clone-mirror-flags="-v --bare"
+git-fetch-flags="-v"
+timestamp-lines=true
+#debug=true
+token="{{ buildkite_agent_token }}"
+queue=macos-intel
+

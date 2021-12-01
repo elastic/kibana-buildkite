@@ -1,0 +1,35 @@
+---
+- name: Check if Homebrew is already installed
+  become: false
+  stat:
+    path: /usr/local/bin/brew
+  register: homebrew_installed
+
+- name: Install Homebrew
+  become: false
+  shell: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+  when: not homebrew_installed.stat.exists
+
+- name: Install homebrew packages
+  become: false
+  community.general.homebrew:
+    name: "{{packages_to_install}}"
+    state: present
+
+- name: Create git mirrors directory
+  file:
+    path: /usr/local/etc/buildkite-agent/git-mirrors
+    state: directory
+
+- name: Setup agent environment hook
+  no_log: true
+  template:
+    src: buildkite-agent-hook-environment.sh
+    dest: /usr/local/etc/buildkite-agent/hooks/environment
+
+- name: Configure buildkite-agent
+  template:
+    src: buildkite-agent.cfg.j2
+    dest: /usr/local/etc/buildkite-agent/buildkite-agent.cfg
+  notify:
+    - restart-buildkite
