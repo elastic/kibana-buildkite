@@ -1,4 +1,4 @@
-name=macos-intel-01
+name="{{ buildkite_agent_name }}"
 build-path="/usr/local/var/buildkite-agent/builds"
 hooks-path="/usr/local/var/buildkite-agent/hooks"
 plugins-path="/usr/local/var/buildkite-agent/plugins"
@@ -9,5 +9,5 @@ git-fetch-flags="-v"
 timestamp-lines=true
 #debug=true
 token="{{ buildkite_agent_token }}"
-queue=macos-intel
+tags="queue=macos-intel"
 

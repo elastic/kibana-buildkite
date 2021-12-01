@@ -1,2 +1,2 @@
 [prod]
-63.135.170.106
+63.135.170.106 buildkite_agent_name=macos-intel-testing-01
