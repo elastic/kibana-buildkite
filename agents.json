@@ -27,6 +27,13 @@
         "exitAfterOneJob": false
       },
       {
+        "queue": "c2-60",
+        "name": "kb-c2-60",
+        "machineType": "c2-standard-60",
+        "localSsds": 2,
+        "maximumAgents": 20
+      },
+      {
         "queue": "c2-16",
         "name": "kb-c2-16",
         "machineType": "c2-standard-16",
