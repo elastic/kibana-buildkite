@@ -8,6 +8,6 @@ git-clone-mirror-flags="-v --bare"
 git-fetch-flags="-v"
 timestamp-lines=true
 #debug=true
-token="{{ buildkite_agent_token }}"
+token="{{ lookup('hashi_vault', 'secret=secret/kibana-issues/dev/macstadium-buildkite:agent_token') }}"
 tags="queue=macos-intel"
 
