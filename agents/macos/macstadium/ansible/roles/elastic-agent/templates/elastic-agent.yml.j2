@@ -1,0 +1,219 @@
+id: 7179d5f0-a449-11eb-83d3-4f503d5a84a1
+revision: 2
+outputs:
+  default:
+    type: elasticsearch
+    hosts:
+      - "{{ lookup('hashi_vault', 'secret=secret/kibana-issues/dev/buildkite-agent-monitoring:elastic-agent-host') }}"
+    username: "{{ lookup('hashi_vault', 'secret=secret/kibana-issues/dev/buildkite-agent-monitoring:elastic-agent-username') }}"
+    password: "{{ lookup('hashi_vault', 'secret=secret/kibana-issues/dev/buildkite-agent-monitoring:elastic-agent-password') }}"
+agent:
+  monitoring:
+    enabled: true
+    use_output: default
+    logs: true
+    metrics: true
+inputs:
+  - id: 1469171f-2eaf-4721-b796-7f9d2c8a0372
+    name: system-1
+    revision: 1
+    type: logfile
+    use_output: default
+    meta:
+      package:
+        name: system
+        version: 0.10.9
+    data_stream:
+      namespace: default
+    streams:
+      - id: logfile-system.auth-1469171f-2eaf-4721-b796-7f9d2c8a0372
+        data_stream:
+          dataset: system.auth
+          type: logs
+        paths:
+          - /var/log/auth.log*
+          - /var/log/secure*
+        exclude_files:
+          - .gz$
+        multiline:
+          pattern: ^\s
+          match: after
+        processors:
+          - add_locale: null
+          - add_fields:
+              target: ""
+              fields:
+                ecs.version: 1.5.0
+      - id: logfile-system.syslog-1469171f-2eaf-4721-b796-7f9d2c8a0372
+        data_stream:
+          dataset: system.syslog
+          type: logs
+        paths:
+          - /var/log/messages*
+          - /var/log/syslog*
+        exclude_files:
+          - .gz$
+        multiline:
+          pattern: ^\s
+          match: after
+        processors:
+          - add_locale: null
+          - add_fields:
+              target: ""
+              fields:
+                ecs.version: 1.5.0
+  - id: 1469171f-2eaf-4721-b796-7f9d2c8a0372
+    name: system-1
+    revision: 1
+    type: system/metrics
+    use_output: default
+    meta:
+      package:
+        name: system
+        version: 0.10.9
+    data_stream:
+      namespace: default
+    streams:
+      - id: system/metrics-system.cpu-1469171f-2eaf-4721-b796-7f9d2c8a0372
+        data_stream:
+          dataset: system.cpu
+          type: metrics
+        metricsets:
+          - cpu
+        cpu.metrics:
+          - percentages
+          - normalized_percentages
+        period: 30s
+      - id: system/metrics-system.diskio-1469171f-2eaf-4721-b796-7f9d2c8a0372
+        data_stream:
+          dataset: system.diskio
+          type: metrics
+        metricsets:
+          - diskio
+        diskio.include_devices: null
+        period: 30s
+      - id: system/metrics-system.filesystem-1469171f-2eaf-4721-b796-7f9d2c8a0372
+        data_stream:
+          dataset: system.filesystem
+          type: metrics
+        metricsets:
+          - filesystem
+        period: 1m
+        processors:
+          - drop_event.when.regexp:
+              system.filesystem.mount_point: ^/(sys|cgroup|proc|dev|etc|host|lib|snap)($|/)
+      - id: system/metrics-system.fsstat-1469171f-2eaf-4721-b796-7f9d2c8a0372
+        data_stream:
+          dataset: system.fsstat
+          type: metrics
+        metricsets:
+          - fsstat
+        period: 1m
+        processors:
+          - drop_event.when.regexp:
+              system.fsstat.mount_point: ^/(sys|cgroup|proc|dev|etc|host|lib|snap)($|/)
+      - id: system/metrics-system.load-1469171f-2eaf-4721-b796-7f9d2c8a0372
+        data_stream:
+          dataset: system.load
+          type: metrics
+        metricsets:
+          - load
+        condition: "${host.platform} != 'windows'"
+        period: 30s
+      - id: system/metrics-system.memory-1469171f-2eaf-4721-b796-7f9d2c8a0372
+        data_stream:
+          dataset: system.memory
+          type: metrics
+        metricsets:
+          - memory
+        period: 30s
+      - id: system/metrics-system.network-1469171f-2eaf-4721-b796-7f9d2c8a0372
+        data_stream:
+          dataset: system.network
+          type: metrics
+        metricsets:
+          - network
+        period: 30s
+        network.interfaces: null
+      - id: system/metrics-system.process-1469171f-2eaf-4721-b796-7f9d2c8a0372
+        data_stream:
+          dataset: system.process
+          type: metrics
+        metricsets:
+          - process
+        period: 30s
+        process.include_top_n.by_cpu: 5
+        process.include_top_n.by_memory: 5
+        process.cmdline.cache.enabled: true
+        process.cgroups.enabled: false
+        process.include_cpu_ticks: false
+        processes:
+          - .*
+      - id: >-
+          system/metrics-system.process_summary-1469171f-2eaf-4721-b796-7f9d2c8a0372
+        data_stream:
+          dataset: system.process_summary
+          type: metrics
+        metricsets:
+          - process_summary
+        period: 30s
+      - id: >-
+          system/metrics-system.socket_summary-1469171f-2eaf-4721-b796-7f9d2c8a0372
+        data_stream:
+          dataset: system.socket_summary
+          type: metrics
+        metricsets:
+          - socket_summary
+        period: 30s
+      - id: system/metrics-system.uptime-1469171f-2eaf-4721-b796-7f9d2c8a0372
+        data_stream:
+          dataset: system.uptime
+          type: metrics
+        metricsets:
+          - uptime
+        period: 30s
+  - id: 228035b1-4ffc-4db8-b0d8-146686d2d5f1
+    name: linux-1
+    revision: 1
+    type: linux/metrics
+    use_output: default
+    meta:
+      package:
+        name: linux
+        version: 0.3.8
+    data_stream:
+      namespace: default
+    streams:
+      - id: linux/metrics-linux.conntrack-228035b1-4ffc-4db8-b0d8-146686d2d5f1
+        data_stream:
+          dataset: linux.conntrack
+          type: metrics
+        metricsets:
+          - conntrack
+        condition: "${host.platform} == 'linux'"
+        period: 30s
+      - id: linux/metrics-linux.iostat-228035b1-4ffc-4db8-b0d8-146686d2d5f1
+        data_stream:
+          dataset: linux.iostat
+          type: metrics
+        metricsets:
+          - iostat
+        condition: "${host.platform} == 'linux'"
+        period: 30s
+      - id: linux/metrics-linux.ksm-228035b1-4ffc-4db8-b0d8-146686d2d5f1
+        data_stream:
+          dataset: linux.ksm
+          type: metrics
+        metricsets:
+          - ksm
+        condition: "${host.platform} == 'linux'"
+        period: 30s
+      - id: linux/metrics-linux.memory-228035b1-4ffc-4db8-b0d8-146686d2d5f1
+        data_stream:
+          dataset: linux.memory
+          type: metrics
+        metricsets:
+          - memory
+        condition: "${host.platform} == 'linux'"
+        period: 30s
+

@@ -1,0 +1,6 @@
+---
+- name: restart-elastic-agent
+  command:
+    cmd: ./elastic-agent restart
+    chdir: /Library/Elastic/Agent
+  become: true

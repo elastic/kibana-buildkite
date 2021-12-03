@@ -6,5 +6,5 @@
   user: "{{default_username}}"
   # become: yes
   roles:
-    - role: common
-      tags: common
+    - common
+    - elastic-agent

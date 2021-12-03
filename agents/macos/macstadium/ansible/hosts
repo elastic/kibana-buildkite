@@ -1,2 +1,2 @@
 [prod]
-63.135.170.106 buildkite_agent_name=macos-intel-testing-01
+63.135.170.106 buildkite_agent_name=macos-intel-testing-01 ansible_become_password="{{ lookup('hashi_vault', 'secret=secret/kibana-issues/dev/macstadium-admin-credentials:macos-intel-testing-01') }}"

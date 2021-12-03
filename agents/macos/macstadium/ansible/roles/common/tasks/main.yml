@@ -1,4 +1,9 @@
 ---
+- name: Set hostname
+  become: true
+  ansible.builtin.hostname:
+    name: "{{ buildkite_agent_name }}"
+
 - name: Check if Homebrew is already installed
   become: false
   stat:
