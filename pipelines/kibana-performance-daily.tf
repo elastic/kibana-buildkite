@@ -12,7 +12,7 @@ resource "buildkite_pipeline" "performance_daily" {
       command: buildkite-agent pipeline upload .buildkite/pipelines/performance/nightly.yml
   EOT
 
-  default_branch       = "271021-fix-concurrency-performance-nightly-job"
+  default_branch       = "2021-11-25-synthetics-perf-test-login-and-home-page"
   branch_configuration = join(" ", local.current_dev_branches)
 }
 
