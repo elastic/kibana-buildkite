@@ -4,22 +4,21 @@
   ansible.builtin.hostname:
     name: "{{ buildkite_agent_name }}"
 
-- name: Check if Homebrew is already installed
-  become: false
-  stat:
-    path: /usr/local/bin/brew
-  register: homebrew_installed
+- name: Manage Homebrew
+  import_tasks: homebrew.yml
 
-- name: Install Homebrew
-  become: false
-  shell: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
-  when: not homebrew_installed.stat.exists
+- name: Manage Macports
+  import_tasks: macports.yml
 
-- name: Install homebrew packages
-  become: false
-  community.general.homebrew:
-    name: "{{packages_to_install}}"
+- name: Install fail2ban
+  become: true
+  community.general.macports:
+    name: fail2ban
     state: present
+
+- name: Ensure fail2ban is started
+  become: true
+  command: /opt/local/bin/port load fail2ban
 
 - name: Create git mirrors directory
   file:

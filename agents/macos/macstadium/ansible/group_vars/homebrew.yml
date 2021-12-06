@@ -1,8 +1,0 @@
-packages_to_install:
-  - jq
-  - git
-  - vault
-  - buildkite/buildkite/buildkite-agent
-  - node@16
-  - yarn
-  - bash

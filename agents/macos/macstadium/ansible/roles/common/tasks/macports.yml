@@ -1,0 +1,22 @@
+---
+- name: Check if MacPorts is already installed
+  stat:
+    path: /opt/local/bin/port
+  register: macports_installed
+
+- name: Download MacPorts Installer
+  get_url:
+    url: "https://github.com/macports/macports-base/releases/download/v2.7.1/MacPorts-2.7.1-12-Monterey.pkg"
+    dest: /tmp
+    owner: root
+    group: wheel
+    mode: 0644
+  become: true
+  when: not macports_installed.stat.exists
+
+- name: Install MacPorts
+  command:
+    chdir: /tmp
+    cmd: "installer -verbose -pkg MacPorts-2.7.1-12-Monterey.pkg -target /"
+  become: true
+  when: not macports_installed.stat.exists

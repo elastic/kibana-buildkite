@@ -1,0 +1,17 @@
+---
+- name: Check if Homebrew is already installed
+  become: false
+  stat:
+    path: /usr/local/bin/brew
+  register: homebrew_installed
+
+- name: Install Homebrew
+  become: false
+  shell: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+  when: not homebrew_installed.stat.exists
+
+- name: Install homebrew packages
+  become: false
+  community.general.homebrew:
+    name: "{{homebrew_packages_to_install}}"
+    state: present
