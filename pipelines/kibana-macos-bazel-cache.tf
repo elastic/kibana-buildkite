@@ -11,6 +11,9 @@ resource "buildkite_pipeline" "macos-bazel-cache" {
   steps:
     - label: ":pipeline: Pipeline upload"
       command: buildkite-agent pipeline upload .buildkite/pipelines/bazel_cache.yml
+      # These concurrency settings work with the same concurrency settings in the pipeline code in the kibana repo
+      # They are temporary while we only have 1 macos agent available and keep the builds in a "waiting" state if another pipeline is currently executing
+      # Keeping them in a waiting state will allow intermediate commits to be skipped whenever a new build starts
       concurrency_group: bazel_macos
       concurrency: 1
       concurrency_method: eager
