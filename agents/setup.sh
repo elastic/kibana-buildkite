@@ -149,6 +149,11 @@ echo "b1198ffffb7d26a3fdedc0fa599f60a0d12aa60da1714b56c1defbce95d8b235 openjdk-1
 tar -xvf openjdk-16.0.1_linux-x64_bin.tar.gz
 mv jdk-16.0.1 openjdk16
 
+curl -O https://download.java.net/java/GA/jdk17.0.1/2a2082e5a09d4267845be086888add4f/12/GPL/openjdk-17.0.1_linux-x64_bin.tar.gz
+echo "1c0a73cbb863aad579b967316bf17673b8f98a9bb938602a140ba2e5c38f880a openjdk-17.0.1_linux-x64_bin.tar.gz" | sha256sum --check
+tar -xvf openjdk-17.0.1_linux-x64_bin.tar.gz
+mv jdk-17.0.1 openjdk17
+
 chown -R "$AGENT_USER":"$AGENT_USER" .
 cd -
 
