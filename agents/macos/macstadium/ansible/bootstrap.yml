@@ -1,6 +1,4 @@
 - hosts: prod
-  vars_files:
-    - group_vars/all.yml
   user: "{{default_username}}"
   tasks:
     - name: Setup kcpassword

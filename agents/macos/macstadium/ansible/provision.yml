@@ -1,10 +1,9 @@
 ---
 - hosts: prod
-  vars_files:
-    - group_vars/all.yml
   user: "{{default_username}}"
   roles:
     - elliotweiser.osx-command-line-tools
     - geerlingguy.mac.homebrew
     - common
-    - elastic-agent
+    - role: elastic-agent
+      when: ansible_machine != "arm64"
