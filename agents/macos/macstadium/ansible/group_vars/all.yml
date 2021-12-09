@@ -1,6 +1,5 @@
 ---
 default_username: administrator
-
 homebrew_packages_to_install:
   - jq
   - git

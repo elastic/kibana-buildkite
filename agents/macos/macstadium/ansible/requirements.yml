@@ -1,2 +1,6 @@
 ---
-- src: community.general
+roles:
+  - name: elliotweiser.osx-command-line-tools
+
+collections:
+  - name: geerlingguy.mac

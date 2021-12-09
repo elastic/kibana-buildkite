@@ -9,5 +9,4 @@ git-fetch-flags="-v"
 timestamp-lines=true
 #debug=true
 token="{{ lookup('hashi_vault', 'secret=secret/kibana-issues/dev/macstadium-buildkite:agent_token') }}"
-tags="queue=macos-intel"
-
+tags="queue={{ buildkite_queue }}"

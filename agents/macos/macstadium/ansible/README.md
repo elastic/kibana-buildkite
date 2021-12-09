@@ -19,4 +19,8 @@ python --version
 
 1. `pip install -r requirements.txt`
 
+2. `ansible-galaxy install -r requirements.yml`
+
+# Run
+
 `export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES`
