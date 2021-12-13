@@ -23,6 +23,20 @@
   command: /opt/local/bin/port load fail2ban
   when: ansible_machine != "arm64"
 
+- name: Create role id file
+  copy:
+    dest: "~/.vault-role-id"
+    content: "{{ lookup('hashi_vault', 'secret=secret/kibana-issues/dev/buildkite-vault-credentials:role_id') }}"
+    mode: "0600"
+    owner: "{{ default_username }}"
+
+- name: Create secret id file
+  copy:
+    dest: "~/.vault-secret-id"
+    content: "{{ lookup('hashi_vault', 'secret=secret/kibana-issues/dev/buildkite-vault-credentials:secret_id') }}"
+    mode: "0600"
+    owner: "{{ default_username }}"
+
 - name: Create git mirrors directory
   file:
     path: "{{ homebrew_prefix }}/etc/buildkite-agent/git-mirrors"

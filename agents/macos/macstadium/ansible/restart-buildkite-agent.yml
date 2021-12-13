@@ -2,4 +2,4 @@
   user: "{{default_username}}"
   tasks:
     - name: Restart buildkite-agent
-      shell: /usr/local/bin/brew services restart buildkite/buildkite/buildkite-agent
+      shell: "{{ (ansible_machine == 'arm64') | ternary('/opt/homebrew', '/usr/local') }}/bin/brew services restart buildkite/buildkite/buildkite-agent"
