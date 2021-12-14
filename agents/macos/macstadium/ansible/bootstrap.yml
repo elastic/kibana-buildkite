@@ -1,5 +1,5 @@
-- hosts: prod
-  user: "{{default_username}}"
+- user: "{{ default_username }}"
+  hosts: "{{ host }}"
   tasks:
     - name: Setup kcpassword
       script: kcpassword.py {{ansible_become_password}}
