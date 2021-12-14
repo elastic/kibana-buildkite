@@ -20,7 +20,8 @@ resource "buildkite_pipeline" "macos-bazel-cache" {
   EOT
 
   default_branch       = "main"
-  branch_configuration = join(" ", local.hourly_branches)
+  branch_configuration = "main"
+  # branch_configuration = join(" ", local.hourly_branches)
 
   skip_intermediate_builds = true
 
