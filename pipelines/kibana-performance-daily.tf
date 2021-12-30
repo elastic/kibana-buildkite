@@ -24,6 +24,10 @@ resource "buildkite_pipeline_schedule" "performance_daily_ci" {
   cronline    = "0 9 * * * Europe/Berlin"
   branch      = each.value
   env         = {
-    ITERATION_COUNT_ENV = "20"
+    PERF_TEST_COUNT="100"
+    PERF_TEST_RUNNER="PLAYWRIGHT"
+    DISABLE_CACHE="1"
+    TEST_THROTTLE_NETWORK="1"
+    KBN_NETWORK_TEST_PROFILE="CLOUD_USER"
   }
 }
