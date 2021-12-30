@@ -1,0 +1,12 @@
+name="{{ buildkite_agent_name }}"
+build-path="{{ homebrew_prefix }}/var/buildkite-agent/builds"
+hooks-path="{{ homebrew_prefix }}/etc/buildkite-agent/hooks"
+plugins-path="{{ homebrew_prefix }}/etc/buildkite-agent/plugins"
+experiment="git-mirrors,output-redactor,ansi-timestamps,normalised-upload-paths,resolve-commit-after-checkout"
+git-mirrors-path="{{ homebrew_prefix }}/etc/buildkite-agent/git-mirrors"
+git-clone-mirror-flags="-v --bare"
+git-fetch-flags="-v"
+timestamp-lines=true
+#debug=true
+token="{{ lookup('hashi_vault', 'secret=secret/kibana-issues/dev/macstadium-buildkite:agent_token') }}"
+tags="queue={{ buildkite_queue }}"

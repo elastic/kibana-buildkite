@@ -1,0 +1,11 @@
+---
+buildkite_queue: macos
+homebrew_prefix: "{{ (ansible_machine == 'arm64') | ternary('/opt/homebrew', '/usr/local') }}"
+homebrew_packages_to_install:
+  - jq
+  - git
+  - vault
+  - buildkite/buildkite/buildkite-agent
+  - node@16
+  - yarn
+  - bash

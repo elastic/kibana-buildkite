@@ -129,6 +129,17 @@ LATEST_VAULT_RELEASE=$(curl -s https://api.github.com/repos/hashicorp/vault/tags
   && chmod +x vault \
   && mv vault /usr/local/bin/vault
 
+mkdir ecctl \
+  && cd ecctl \
+  && curl -L https://download.elastic.co/downloads/ecctl/1.6.0/ecctl_1.6.0_linux_amd64.tar.gz -o ecctl.tar.gz \
+  && tar xzf ecctl.tar.gz \
+  && mv ecctl /usr/local/bin/ecctl \
+  && cd - \
+  && rm -rf ecctl
+
+mkdir -p "$AGENT_HOME/.ecctl"
+mv /tmp/ecctl.json "$AGENT_HOME/.ecctl/config.json"
+
 usermod -a -G docker "$AGENT_USER"
 
 mkdir -p "$AGENT_HOME/.java"
@@ -148,6 +159,11 @@ curl -O https://download.java.net/java/GA/jdk16.0.1/7147401fd7354114ac51ef3e1328
 echo "b1198ffffb7d26a3fdedc0fa599f60a0d12aa60da1714b56c1defbce95d8b235 openjdk-16.0.1_linux-x64_bin.tar.gz" | sha256sum --check
 tar -xvf openjdk-16.0.1_linux-x64_bin.tar.gz
 mv jdk-16.0.1 openjdk16
+
+curl -O https://download.java.net/java/GA/jdk17.0.1/2a2082e5a09d4267845be086888add4f/12/GPL/openjdk-17.0.1_linux-x64_bin.tar.gz
+echo "1c0a73cbb863aad579b967316bf17673b8f98a9bb938602a140ba2e5c38f880a openjdk-17.0.1_linux-x64_bin.tar.gz" | sha256sum --check
+tar -xvf openjdk-17.0.1_linux-x64_bin.tar.gz
+mv jdk-17.0.1 openjdk17
 
 chown -R "$AGENT_USER":"$AGENT_USER" .
 cd -

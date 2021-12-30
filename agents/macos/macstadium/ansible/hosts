@@ -1,0 +1,9 @@
+[dev]
+63.135.170.106 buildkite_agent_name=macos-x86-testing-01 ansible_become_password="{{ lookup('hashi_vault', 'secret=secret/kibana-issues/dev/macstadium-admin-credentials:macos-x86-testing-01') }}"
+
+[prod]
+worker-c079093yjrv2.build.macstadium.elasticnet.co buildkite_queue=macos-x86 buildkite_agent_name=macos-x86-01 ansible_become_password="{{ lookup('hashi_vault', 'secret=secret/kibana-issues/dev/macstadium-admin-credentials:macos-x86-01') }}"
+worker-h2wdt4vyq6ny.build.macstadium.elasticnet.co buildkite_queue=macos-arm buildkite_agent_name=macos-arm-01 ansible_become_password="{{ lookup('hashi_vault', 'secret=secret/kibana-issues/dev/macstadium-admin-credentials:macos-arm-01') }}"
+
+[prod:vars]
+default_username=administrator

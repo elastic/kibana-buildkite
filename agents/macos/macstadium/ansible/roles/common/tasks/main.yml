@@ -1,0 +1,56 @@
+---
+- name: Set hostname
+  become: true
+  ansible.builtin.hostname:
+    name: "{{ buildkite_agent_name }}"
+
+- name: Manage Homebrew
+  import_tasks: homebrew.yml
+
+- name: Manage Macports
+  import_tasks: macports.yml
+  when: ansible_machine != "arm64"
+
+- name: Install fail2ban
+  become: true
+  community.general.macports:
+    name: fail2ban
+    state: present
+  when: ansible_machine != "arm64"
+
+- name: Ensure fail2ban is started
+  become: true
+  command: /opt/local/bin/port load fail2ban
+  when: ansible_machine != "arm64"
+
+- name: Create role id file
+  copy:
+    dest: "~/.vault-role-id"
+    content: "{{ lookup('hashi_vault', 'secret=secret/kibana-issues/dev/buildkite-vault-credentials:role_id') }}"
+    mode: "0600"
+    owner: "{{ default_username }}"
+
+- name: Create secret id file
+  copy:
+    dest: "~/.vault-secret-id"
+    content: "{{ lookup('hashi_vault', 'secret=secret/kibana-issues/dev/buildkite-vault-credentials:secret_id') }}"
+    mode: "0600"
+    owner: "{{ default_username }}"
+
+- name: Create git mirrors directory
+  file:
+    path: "{{ homebrew_prefix }}/etc/buildkite-agent/git-mirrors"
+    state: directory
+
+- name: Setup agent environment hook
+  no_log: true
+  template:
+    src: buildkite-agent-hook-environment.sh
+    dest: "{{ homebrew_prefix }}/etc/buildkite-agent/hooks/environment"
+
+- name: Configure buildkite-agent
+  template:
+    src: buildkite-agent.cfg.j2
+    dest: "{{ homebrew_prefix }}/etc/buildkite-agent/buildkite-agent.cfg"
+  notify:
+    - restart-buildkite

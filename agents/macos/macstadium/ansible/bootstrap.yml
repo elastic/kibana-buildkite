@@ -1,0 +1,17 @@
+- user: "{{ default_username }}"
+  hosts: "{{ host }}"
+  tasks:
+    - name: Setup kcpassword
+      script: kcpassword.py {{ansible_become_password}}
+      become: true
+
+    - name: Set up autologin
+      become: true
+      shell: |
+        defaults write /Library/Preferences/com.apple.loginwindow.plist autoLoginUser {{default_username}}
+        plutil -replace autoLoginUser -string {{default_username}} /Library/Preferences/com.apple.loginwindow.plist
+        /usr/libexec/PlistBuddy -c "Set autoLoginUser {{default_username}}" /Library/Preferences/com.apple.loginwindow.plist
+
+    - name: Reboot
+      become: true
+      reboot:
