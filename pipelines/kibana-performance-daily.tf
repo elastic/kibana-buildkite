@@ -1,7 +1,7 @@
 resource "buildkite_pipeline" "performance_daily" {
-  name        = "kibana / performance nightly"
-  description = "Runs performance tests nightly"
-  repository  = "https://github.com/suchcodemuchwow/kibana"
+  name        = "kibana / performance daily"
+  description = "Runs performance tests daily"
+  repository  = "https://github.com/elastic/kibana"
   steps       = <<-EOT
   env:
     SLACK_NOTIFICATIONS_CHANNEL: '#kibana-performance-alerts'
@@ -9,10 +9,10 @@ resource "buildkite_pipeline" "performance_daily" {
     SLACK_NOTIFICATIONS_ON_SUCCESS: 'true'
   steps:
     - label: ":pipeline: Pipeline upload"
-      command: buildkite-agent pipeline upload .buildkite/pipelines/performance/nightly.yml
+      command: buildkite-agent pipeline upload .buildkite/pipelines/performance/daily.yml
   EOT
 
-  default_branch       = "2021-11-25-synthetics-perf-test-login-and-home-page"
+  default_branch       = "main"
   branch_configuration = join(" ", local.current_dev_branches)
 }
 
@@ -20,14 +20,10 @@ resource "buildkite_pipeline_schedule" "performance_daily_ci" {
   for_each = toset(local.current_dev_branches)
 
   pipeline_id = buildkite_pipeline.performance_daily.id
-  label       = "Nightly build"
+  label       = "Daily build"
   cronline    = "0 9 * * * Europe/Berlin"
   branch      = each.value
   env         = {
     PERF_TEST_COUNT="100"
-    PERF_TEST_RUNNER="PLAYWRIGHT"
-    DISABLE_CACHE="1"
-    TEST_THROTTLE_NETWORK="1"
-    KBN_NETWORK_TEST_PROFILE="CLOUD_USER"
   }
 }
