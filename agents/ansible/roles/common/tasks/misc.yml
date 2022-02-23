@@ -1,0 +1,31 @@
+- name: Install fpm
+  community.general.gem:
+    name: fpm
+    version: 1.13.1
+    state: present
+
+- name: Disable automatic upgrades
+  lineinfile:
+    path: /etc/apt/apt.conf.d/10periodic
+    search_string: 'APT::Periodic::Enable "0";'
+    line: 'APT::Periodic::Enable "0";'
+    create: yes
+
+- name: Increase file descriptor limits
+  community.general.pam_limits:
+    domain: "*"
+    limit_type: "-"
+    limit_item: nofile
+    value: 500000
+
+- name: Increase process limits
+  community.general.pam_limits:
+    domain: "*"
+    limit_type: "-"
+    limit_item: nofile
+    value: 262144
+
+- name: Install yarn
+  community.general.npm:
+    name: yarn
+    global: yes

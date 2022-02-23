@@ -1,0 +1,162 @@
+- name: Add apt key id for Buildkite
+  ansible.builtin.apt_key:
+    keyserver: keyserver.ubuntu.com
+    id: 32A37959C2FA5C3C99EFBC32A79206696452D198
+
+- name: Add apt key id for Github
+  ansible.builtin.apt_key:
+    keyserver: keyserver.ubuntu.com
+    id: C99B11DEB97541F0
+
+- name: Add Google Cloud SDK apt signing key
+  ansible.builtin.apt_key:
+    url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+    state: present
+
+- name: Add Google Chrome apt signing key
+  ansible.builtin.apt_key:
+    url: https://dl.google.com/linux/linux_signing_key.pub
+    state: present
+
+- name: Add Docker apt signing key
+  ansible.builtin.apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+
+- name: Add Nodesource signing key
+  apt_key:
+    url: https://keyserver.ubuntu.com/pks/lookup?op=get&fingerprint=on&search=0x1655A0AB68576280
+    id: "68576280"
+    state: present
+
+- name: Add Hashicorp apt signing key
+  ansible.builtin.apt_key:
+    url: https://apt.releases.hashicorp.com/gpg
+    state: present
+
+- name: Add Buildkite apt repository
+  ansible.builtin.apt_repository:
+    repo: deb https://apt.buildkite.com/buildkite-agent stable main
+    state: present
+
+- name: Add Github CLI apt repository
+  ansible.builtin.apt_repository:
+    repo: deb https://cli.github.com/packages {{ ansible_distribution_release | lower }} main
+    state: present
+
+- name: Add Google Cloud SDK apt repository
+  ansible.builtin.apt_repository:
+    repo: deb https://packages.cloud.google.com/apt cloud-sdk main
+    state: present
+
+- name: Add Google Chrome apt repository
+  ansible.builtin.apt_repository:
+    repo: deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main
+    state: present
+
+- name: Add Docker apt repository
+  ansible.builtin.apt_repository:
+    repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release | lower }} stable
+    state: present
+
+- name: Add ansible ppa repository
+  ansible.builtin.apt_repository:
+    repo: ppa:ansible/ansible
+
+- name: Add NodeSource repositories for Node.js.
+  ansible.builtin.apt_repository:
+    repo: "deb https://deb.nodesource.com/node_16.x {{ ansible_distribution_release }} main"
+    state: present
+
+- name: Add Hashicorp apt repository
+  ansible.builtin.apt_repository:
+    repo: deb [arch=amd64] https://apt.releases.hashicorp.com {{ ansible_distribution_release | lower }} main
+    state: present
+
+- name: Remove snapd
+  apt:
+    name: snapd
+    state: absent
+    purge: yes
+
+- name: Install packages
+  ansible.builtin.package:
+    name:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - gnupg-agent
+      - software-properties-common
+      - buildkite-agent
+      - virtualbox
+      - ruby
+      - ruby-dev
+      - rpm
+      - ansible
+      - dnsmasq
+      - google-cloud-sdk
+      - gh
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      - git
+      - jq
+      - rsync
+      - openjdk-11-jre-headless
+      - unzip
+      - build-essential
+      - kubectl
+      - nodejs
+      - vault
+      - openjdk-16-jdk
+      - openjdk-17-jdk
+      # For Chrome/FF below:
+      - xvfb
+      - gconf-service
+      - libasound2
+      - libatk1.0-0
+      - libc6
+      - libcairo2
+      - libcups2
+      - libdbus-1-3
+      - libexpat1
+      - libfontconfig1
+      - libgcc1
+      - libgconf-2-4
+      - libgdk-pixbuf2.0-0
+      - libglib2.0-0
+      - libgtk-3-0
+      - libnspr4
+      - libpango-1.0-0
+      - libpangocairo-1.0-0
+      - libstdc++6
+      - libx11-6
+      - libx11-xcb1
+      - libxcb1
+      - libxcomposite1
+      - libxcursor1
+      - libxdamage1
+      - libxext6
+      - libxfixes3
+      - libxi6
+      - libxrandr2
+      - libxrender1
+      - libxss1
+      - libxtst6
+      - fonts-liberation
+      - libappindicator1
+      - libnss3
+      - lsb-release
+      - xdg-utils
+    state: latest
+
+- name: Install packages ignoring "install-recommends"
+  apt:
+    pkg:
+      - qemu-system
+      - libvirt-clients
+      - libvirt-daemon-system
+      - google-chrome-stable
+      - firefox
+    state: latest
+    install_recommends: no
