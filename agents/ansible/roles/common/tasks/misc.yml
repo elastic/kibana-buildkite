@@ -29,3 +29,34 @@
   community.general.npm:
     name: yarn
     global: yes
+
+- name: Setup ecctl
+  args:
+    executable: /bin/bash
+  shell: |
+    set -eu
+
+    if [[ ! -f /usr/local/bin/ecctl ]]; then
+      mkdir -p /tmp/ecctl
+      cd /tmp/ecctl
+      curl -L https://download.elastic.co/downloads/ecctl/1.6.0/ecctl_1.6.0_linux_amd64.tar.gz -o ecctl.tar.gz
+      tar xzf ecctl.tar.gz
+      mv ecctl /usr/local/bin/ecctl
+      chmod +x /usr/local/bin/ecctl
+      cd -
+      rm -rf ecctl
+    fi
+
+- name: Create ecctl config directory
+  ansible.builtin.file:
+    path: /var/lib/buildkite-agent/.ecctl
+    state: directory
+    owner: buildkite-agent
+    group: buildkite-agent
+
+- name: Configure ecctl
+  template:
+    src: ecctl.json
+    dest: /var/lib/buildkite-agent/.ecctl/config.json
+    owner: buildkite-agent
+    group: buildkite-agent

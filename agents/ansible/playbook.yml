@@ -1,6 +1,8 @@
 ---
-- hosts: 127.0.0.1
-  connection: local
-  # user: "{{default_username}}"
+- hosts: all
+  become: true
+  vars:
+    is_static: yes
   roles:
     - common
+    - static
