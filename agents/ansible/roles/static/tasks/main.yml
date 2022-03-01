@@ -18,7 +18,7 @@
   become: true
   template:
     src: elastic-agent.yml.j2
-    dest: /opt/elastic-agent-install/elastic-agent.yml
+    dest: /opt/Elastic/Agent/elastic-agent.yml
   notify:
     - restart-elastic-agent
 
