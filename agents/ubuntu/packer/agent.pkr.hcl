@@ -44,9 +44,9 @@ build {
   }
 
   provisioner "ansible" {
-    playbook_file = "./ansible/packer.yml"
+    playbook_file = "../ansible/packer.yml"
     // user = "root"
-    extra_arguments = [ "-vvv" ]
+    // extra_arguments = [ "-vvv" ]
     use_proxy = false
   }
 

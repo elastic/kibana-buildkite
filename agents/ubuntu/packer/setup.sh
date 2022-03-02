@@ -17,6 +17,7 @@ EOF
 }
 
 # These should be in /etc/sysctl.conf !!!
+# They should be tested more before enabling them in the correct place
 # cat >> /etc/security/limits.conf <<'EOF'
 # # From Jenkins workers
 # fs.file-max=500000
@@ -58,7 +59,6 @@ git-fetch-flags="-v"
 timestamp-lines=true
 EOF
 
-# ansible
 mv /tmp/bk-hooks/* /etc/buildkite-agent/hooks/
 chown -R "$AGENT_USER:$AGENT_USER" /etc/buildkite-agent/hooks
 chmod +x /etc/buildkite-agent/hooks/*
@@ -78,19 +78,15 @@ gcloud auth configure-docker --quiet
   cd -
 }
 
-# Packer only
 mv /tmp/bk-startup.sh /opt/bk-startup.sh
 chown root:root /opt/bk-startup.sh
 chmod +x /opt/bk-startup.sh
 
-# Packer only
 systemctl disable buildkite-agent
 
-# Packer only
 apt-get clean
 rm -rf /var/lib/apt/lists/*
 
-# Packer only
 # Bootstrap cache
 su - buildkite-agent <<'EOF'
 set -e
@@ -102,7 +98,6 @@ HOME=/var/lib/buildkite-agent bash .buildkite/scripts/packer_cache.sh
 cd -
 EOF
 
-# Packer only
 sync
 
 sleep 3

@@ -4,7 +4,7 @@ set -euo pipefail
 
 echo --- Building image
 
-cd agents
+cd agents/ubuntu/packer
 
 docker run -it --rm --init --volume "$(pwd)":/app --workdir /app hashicorp/packer:latest build .
 
