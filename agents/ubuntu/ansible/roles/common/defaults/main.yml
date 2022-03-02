@@ -1,2 +1,4 @@
 ---
 buildkite_queue: kb-linux-test
+is_static: false
+is_docker: false

@@ -60,3 +60,19 @@
     dest: /var/lib/buildkite-agent/.ecctl/config.json
     owner: buildkite-agent
     group: buildkite-agent
+
+- name: Create vault role id file
+  when: is_static
+  copy:
+    dest: "/var/lib/buildkite-agent/.vault-role-id"
+    content: "{{ lookup('hashi_vault', 'secret=secret/kibana-issues/dev/buildkite-vault-credentials:role_id') }}"
+    mode: "0600"
+    owner: "buildkite-agent"
+
+- name: Create vault secret id file
+  when: is_static
+  copy:
+    dest: "/var/lib/buildkite-agent/.vault-secret-id"
+    content: "{{ lookup('hashi_vault', 'secret=secret/kibana-issues/dev/buildkite-vault-credentials:secret_id') }}"
+    mode: "0600"
+    owner: "buildkite-agent"

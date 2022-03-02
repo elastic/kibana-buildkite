@@ -2,7 +2,7 @@
 - name: Set hostname
   ansible.builtin.hostname:
     name: "{{ buildkite_agent_name }}"
-  when: is_static
+  when: is_static and not is_docker
 
 - name: Install Packages
   import_tasks: packages.yml
@@ -15,3 +15,6 @@
 
 - name: Buildkite Agent
   import_tasks: buildkite-agent.yml
+
+- name: Elastic Agent
+  import_tasks: elastic-agent.yml

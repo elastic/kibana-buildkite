@@ -84,6 +84,8 @@ chmod +x /opt/bk-startup.sh
 
 systemctl disable buildkite-agent
 
+cp /tmp/elastic-agent.yml /opt/elastic-agent-install/
+
 apt-get clean
 rm -rf /var/lib/apt/lists/*
 

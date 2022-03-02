@@ -1,0 +1,34 @@
+---
+- name: Download Elastic Agent
+  become: true
+  args:
+    executable: /bin/bash
+    creates: /opt/elastic-agent-install/elastic-agent
+  register: elastic_agent_download
+  shell:
+    cmd: |
+      cd /opt
+      curl -L -O https://artifacts.elastic.co/downloads/beats/elastic-agent/elastic-agent-7.17.0-linux-x86_64.tar.gz
+      tar xzf elastic-agent-7.17.0-linux-x86_64.tar.gz
+      mv elastic-agent-7.17.0-linux-x86_64 /opt/elastic-agent-install
+
+- name: Install Elastic Agent
+  become: true
+  args:
+    executable: /bin/bash
+  when:
+    - is_static
+    - elastic_agent_download.changed
+  shell:
+    cmd: |
+      cd /opt/elastic-agent-install
+      ./elastic-agent install -f
+
+- name: Configure Elastic Agent
+  become: true
+  template:
+    src: elastic-agent.yml.j2
+    dest: /opt/Elastic/Agent/elastic-agent.yml
+  when: is_static
+  notify:
+    - restart-elastic-agent

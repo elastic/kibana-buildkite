@@ -1,3 +1,6 @@
 ---
 - name: restart-buildkite
   command: "service buildkite-agent restart"
+
+- name: restart-elastic-agent
+  command: "/usr/bin/elastic-agent restart"
