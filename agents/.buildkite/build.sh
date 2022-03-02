@@ -6,7 +6,7 @@ echo --- Building image
 
 cd agents/ubuntu
 
-docker build -t packer-builder .
+docker build --progress plain -t packer-builder .
 docker run -it --rm --init --volume "$(pwd)":/app --workdir /app packer-builder ./packer_build.sh
 
 echo --- Deleting images older than 30 days
