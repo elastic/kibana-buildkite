@@ -27,6 +27,15 @@
         "exitAfterOneJob": false
       },
       {
+        "queue": "kibana-default",
+        "name": "kibana-default",
+        "machineType": "n2-standard-2",
+        "minimumAgents": 2,
+        "maximumAgents": 100,
+        "idleTimeoutMins": 60,
+        "exitAfterOneJob": false
+      },
+      {
         "queue": "c2-60",
         "name": "kb-c2-60",
         "machineType": "c2-standard-60",
@@ -105,7 +114,7 @@
         "name": "kb-packer",
         "serviceAccount": "buildkite-packer-agent@elastic-kibana-ci.iam.gserviceaccount.com",
         "maximumAgents": 10,
-        "machineType": "e2-small"
+        "machineType": "n2-standard-2"
       },
       {
         "queue": "terraform",
@@ -161,6 +170,14 @@
         "name": "kb-n2d-4",
         "machineType": "n2d-standard-4",
         "localSsds": 1
+      },
+      {
+        "queue": "n2-4-dev",
+        "name": "kb-n2-4-dev",
+        "machineType": "n2-standard-4",
+        "localSsds": 1,
+        "maximumAgents": 2000,
+        "imageFamily": "kb-ubuntu-test"
       }
     ]
   }

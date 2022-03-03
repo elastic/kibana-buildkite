@@ -9,6 +9,8 @@ resource "buildkite_pipeline" "demo-env" {
   steps:
     - label: ":pipeline: Pipeline upload"
       command: buildkite-agent pipeline upload .buildkite/pipelines/update_demo_env.yml
+      agents:
+        queue: kibana-default
   EOT
 
   default_branch       = "main"

@@ -17,6 +17,8 @@ resource "buildkite_pipeline" "macos-bazel-cache" {
       concurrency_group: bazel_macos
       concurrency: 1
       concurrency_method: eager
+      agents:
+        queue: kibana-default
   EOT
 
   default_branch       = "main"

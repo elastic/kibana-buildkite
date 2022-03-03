@@ -10,6 +10,8 @@ resource "buildkite_pipeline" "performance_daily" {
   steps:
     - label: ":pipeline: Pipeline upload"
       command: buildkite-agent pipeline upload .buildkite/pipelines/performance/nightly.yml
+      agents:
+        queue: kibana-default
   EOT
 
   default_branch       = "2021-11-25-synthetics-perf-test-login-and-home-page"

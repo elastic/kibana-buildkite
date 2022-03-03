@@ -8,6 +8,8 @@ resource "buildkite_pipeline" "docker_context" {
   steps:
     - label: ":pipeline: Pipeline upload"
       command: buildkite-agent pipeline upload .buildkite/pipelines/docker_context.yml
+      agents:
+        queue: kibana-default
   EOT
 
   default_branch       = "main"

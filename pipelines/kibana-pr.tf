@@ -11,6 +11,8 @@ resource "buildkite_pipeline" "pull-request" {
   steps:
     - label: ":pipeline: Pipeline upload"
       command: .buildkite/scripts/pipelines/pull_request/pipeline.sh
+      agents:
+        queue: kibana-default
   EOT
 
   default_branch       = "main"

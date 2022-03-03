@@ -11,6 +11,8 @@ resource "buildkite_pipeline" "on-merge" {
   steps:
     - label: ":pipeline: Pipeline upload"
       command: buildkite-agent pipeline upload .buildkite/pipelines/on_merge.yml
+      agents:
+        queue: kibana-default
   EOT
 
   default_branch       = "main"

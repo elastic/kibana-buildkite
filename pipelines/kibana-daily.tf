@@ -10,6 +10,8 @@ resource "buildkite_pipeline" "daily" {
   steps:
     - label: ":pipeline: Pipeline upload"
       command: buildkite-agent pipeline upload .buildkite/pipelines/hourly.yml
+      agents:
+        queue: kibana-default
   EOT
 
   default_branch       = ""

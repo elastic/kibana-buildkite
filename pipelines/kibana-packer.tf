@@ -9,6 +9,8 @@ resource "buildkite_pipeline" "agent_packer" {
   steps:
     - label: ":pipeline: Pipeline upload"
       command: buildkite-agent pipeline upload agents/.buildkite/pipeline.yml
+      agents:
+        queue: kibana-default
   EOT
 
   default_branch       = "main"

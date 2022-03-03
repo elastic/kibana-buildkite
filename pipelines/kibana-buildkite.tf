@@ -9,6 +9,8 @@ resource "buildkite_pipeline" "kibana-buildkite-trigger" {
   steps:
     - label: ":pipeline: Pipeline upload"
       command: buildkite-agent pipeline upload .buildkite/pipeline.yml
+      agents:
+        queue: kibana-default
   EOT
 
   default_branch       = "main"
@@ -33,6 +35,8 @@ resource "buildkite_pipeline" "kibana-buildkite-pipelines-deploy" {
   steps:
     - label: ":pipeline: Pipeline upload"
       command: buildkite-agent pipeline upload pipelines/.buildkite/deploy.yml
+      agents:
+        queue: kibana-default
   EOT
 
   default_branch       = "main"

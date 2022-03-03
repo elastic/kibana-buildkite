@@ -12,6 +12,8 @@ resource "buildkite_pipeline" "kibana-ci-stats-main" {
   steps:
     - label: ":pipeline: Pipeline upload"
       command: buildkite-agent pipeline upload .buildkite/pipeline.yml
+      agents:
+        queue: kibana-default
   EOT
 
   default_branch       = "main"
@@ -40,6 +42,8 @@ resource "buildkite_pipeline" "kibana-ci-stats-pull-request" {
   steps:
     - label: ":pipeline: Pipeline upload"
       command: buildkite-agent pipeline upload .buildkite/pipeline.yml
+      agents:
+        queue: kibana-default
   EOT
 
   default_branch       = "main"

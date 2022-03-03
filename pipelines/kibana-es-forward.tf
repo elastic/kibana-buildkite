@@ -9,6 +9,8 @@ resource "buildkite_pipeline" "es_forward_7" {
   steps:
     - label: ":pipeline: Pipeline upload"
       command: buildkite-agent pipeline upload .buildkite/pipelines/hourly.yml
+      agents:
+        queue: kibana-default
   EOT
 
   default_branch       = "7.17"
@@ -41,6 +43,8 @@ resource "buildkite_pipeline" "es_forward_7_81" {
   steps:
     - label: ":pipeline: Pipeline upload"
       command: buildkite-agent pipeline upload .buildkite/pipelines/hourly.yml
+      agents:
+        queue: kibana-default
   EOT
 
   default_branch       = "7.17"
