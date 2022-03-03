@@ -16,6 +16,32 @@ LABEL=UEFI               /boot/efi     vfat    defaults,noatime        0 0
 EOF
 }
 
+mkdir -p "$AGENT_HOME/.java"
+cd "$AGENT_HOME/.java"
+
+curl -O https://download.java.net/java/GA/jdk14.0.2/205943a0976c4ed48cb16f1043c5c647/12/GPL/openjdk-14.0.2_linux-x64_bin.tar.gz
+echo "91310200f072045dc6cef2c8c23e7e6387b37c46e9de49623ce0fa461a24623d openjdk-14.0.2_linux-x64_bin.tar.gz" | sha256sum --check
+tar -xvf openjdk-14.0.2_linux-x64_bin.tar.gz
+mv jdk-14.0.2 openjdk14
+
+curl -O https://download.java.net/java/GA/jdk15.0.2/0d1cfde4252546c6931946de8db48ee2/7/GPL/openjdk-15.0.2_linux-x64_bin.tar.gz
+echo "91ac6fc353b6bf39d995572b700e37a20e119a87034eeb939a6f24356fbcd207 openjdk-15.0.2_linux-x64_bin.tar.gz" | sha256sum --check
+tar -xvf openjdk-15.0.2_linux-x64_bin.tar.gz
+mv jdk-15.0.2 openjdk15
+
+curl -O https://download.java.net/java/GA/jdk16.0.1/7147401fd7354114ac51ef3e1328291f/9/GPL/openjdk-16.0.1_linux-x64_bin.tar.gz
+echo "b1198ffffb7d26a3fdedc0fa599f60a0d12aa60da1714b56c1defbce95d8b235 openjdk-16.0.1_linux-x64_bin.tar.gz" | sha256sum --check
+tar -xvf openjdk-16.0.1_linux-x64_bin.tar.gz
+mv jdk-16.0.1 openjdk16
+
+curl -O https://download.java.net/java/GA/jdk17.0.1/2a2082e5a09d4267845be086888add4f/12/GPL/openjdk-17.0.1_linux-x64_bin.tar.gz
+echo "1c0a73cbb863aad579b967316bf17673b8f98a9bb938602a140ba2e5c38f880a openjdk-17.0.1_linux-x64_bin.tar.gz" | sha256sum --check
+tar -xvf openjdk-17.0.1_linux-x64_bin.tar.gz
+mv jdk-17.0.1 openjdk17
+
+chown -R "$AGENT_USER":"$AGENT_USER" .
+cd -
+
 # These should be in /etc/sysctl.conf !!!
 # They should be tested more before enabling them in the correct place
 # cat >> /etc/security/limits.conf <<'EOF'
