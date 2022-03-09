@@ -22,6 +22,11 @@ resource "buildkite_pipeline" "docker_context" {
 
     trigger_mode = "none"
   }
+
+  team {
+    slug = "everyone"
+    access_level = "MANAGE_BUILD_AND_READ"
+  }
 }
 
 resource "buildkite_pipeline_schedule" "docker_context_daily" {

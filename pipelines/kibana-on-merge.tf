@@ -25,6 +25,11 @@ resource "buildkite_pipeline" "on-merge" {
 
     trigger_mode = "code"
   }
+
+  team {
+    slug = "everyone"
+    access_level = "MANAGE_BUILD_AND_READ"
+  }
 }
 
 resource "github_repository_webhook" "on-merge" {

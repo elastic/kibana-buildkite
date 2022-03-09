@@ -23,6 +23,11 @@ resource "buildkite_pipeline" "es_snapshot_build" {
 
     trigger_mode = "none"
   }
+
+  team {
+    slug = "everyone"
+    access_level = "MANAGE_BUILD_AND_READ"
+  }
 }
 
 resource "buildkite_pipeline" "es_snapshot_verify" {
@@ -50,6 +55,11 @@ resource "buildkite_pipeline" "es_snapshot_verify" {
 
     trigger_mode = "none"
   }
+
+  team {
+    slug = "everyone"
+    access_level = "MANAGE_BUILD_AND_READ"
+  }
 }
 
 resource "buildkite_pipeline" "es_snapshot_promote" {
@@ -76,6 +86,11 @@ resource "buildkite_pipeline" "es_snapshot_promote" {
     build_pull_requests = false
 
     trigger_mode = "none"
+  }
+
+  team {
+    slug = "everyone"
+    access_level = "MANAGE_BUILD_AND_READ"
   }
 }
 

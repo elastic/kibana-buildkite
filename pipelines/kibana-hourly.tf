@@ -20,6 +20,11 @@ resource "buildkite_pipeline" "hourly" {
   provider_settings {
     trigger_mode = "none"
   }
+
+  team {
+    slug = "everyone"
+    access_level = "MANAGE_BUILD_AND_READ"
+  }
 }
 
 resource "buildkite_pipeline_schedule" "hourly-ci" {

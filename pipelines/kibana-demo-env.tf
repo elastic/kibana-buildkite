@@ -25,6 +25,11 @@ resource "buildkite_pipeline" "demo-env" {
 
     publish_commit_status = false
   }
+
+  team {
+    slug = "everyone"
+    access_level = "MANAGE_BUILD_AND_READ"
+  }
 }
 
 resource "buildkite_pipeline_schedule" "demo-env-daily" {

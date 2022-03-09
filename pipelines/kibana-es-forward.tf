@@ -23,6 +23,11 @@ resource "buildkite_pipeline" "es_forward_7" {
 
     trigger_mode = "none"
   }
+
+  team {
+    slug = "everyone"
+    access_level = "MANAGE_BUILD_AND_READ"
+  }
 }
 
 resource "buildkite_pipeline_schedule" "es_forward_7" {
@@ -56,6 +61,11 @@ resource "buildkite_pipeline" "es_forward_7_81" {
     build_pull_requests = false
 
     trigger_mode = "none"
+  }
+
+  team {
+    slug = "everyone"
+    access_level = "MANAGE_BUILD_AND_READ"
   }
 }
 

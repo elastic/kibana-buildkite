@@ -26,6 +26,11 @@ resource "buildkite_pipeline" "daily" {
 
     trigger_mode = "code"
   }
+
+  team {
+    slug = "everyone"
+    access_level = "MANAGE_BUILD_AND_READ"
+  }
 }
 
 resource "buildkite_pipeline_schedule" "daily-ci" {

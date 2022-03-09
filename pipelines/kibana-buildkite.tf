@@ -23,6 +23,11 @@ resource "buildkite_pipeline" "kibana-buildkite-trigger" {
 
     trigger_mode = "code"
   }
+
+  team {
+    slug = "everyone"
+    access_level = "MANAGE_BUILD_AND_READ"
+  }
 }
 
 resource "buildkite_pipeline" "kibana-buildkite-pipelines-deploy" {
@@ -48,6 +53,11 @@ resource "buildkite_pipeline" "kibana-buildkite-pipelines-deploy" {
     build_pull_requests = false
 
     trigger_mode = "code"
+  }
+
+  team {
+    slug = "everyone"
+    access_level = "MANAGE_BUILD_AND_READ"
   }
 }
 

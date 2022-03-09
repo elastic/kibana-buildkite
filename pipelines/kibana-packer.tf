@@ -23,6 +23,11 @@ resource "buildkite_pipeline" "agent_packer" {
 
     trigger_mode = "code"
   }
+
+  team {
+    slug = "everyone"
+    access_level = "MANAGE_BUILD_AND_READ"
+  }
 }
 
 resource "buildkite_pipeline_schedule" "agent_packer_daily" {

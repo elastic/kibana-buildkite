@@ -22,6 +22,11 @@ resource "buildkite_pipeline" "purge_cloud_deployments" {
 
     trigger_mode = "none"
   }
+
+  team {
+    slug = "everyone"
+    access_level = "MANAGE_BUILD_AND_READ"
+  }
 }
 
 resource "buildkite_pipeline_schedule" "purge_cloud_deployments_hourly" {

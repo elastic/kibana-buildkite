@@ -29,5 +29,10 @@ resource "buildkite_pipeline" "pull-request" {
 
     publish_commit_status = false
   }
+
+  team {
+    slug = "everyone"
+    access_level = "MANAGE_BUILD_AND_READ"
+  }
 }
 

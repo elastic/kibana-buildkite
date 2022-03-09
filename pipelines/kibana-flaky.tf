@@ -15,4 +15,9 @@ resource "buildkite_pipeline" "flaky_test_suite_runner" {
   provider_settings {
     trigger_mode = "none"
   }
+
+  team {
+    slug = "everyone"
+    access_level = "MANAGE_BUILD_AND_READ"
+  }
 }

@@ -27,6 +27,11 @@ resource "buildkite_pipeline" "kibana-ci-stats-main" {
 
     trigger_mode = "code"
   }
+
+  team {
+    slug = "everyone"
+    access_level = "MANAGE_BUILD_AND_READ"
+  }
 }
 
 resource "buildkite_pipeline" "kibana-ci-stats-pull-request" {
@@ -59,6 +64,11 @@ resource "buildkite_pipeline" "kibana-ci-stats-pull-request" {
     trigger_mode = "none"
 
     publish_commit_status = false
+  }
+
+  team {
+    slug = "everyone"
+    access_level = "MANAGE_BUILD_AND_READ"
   }
 }
 

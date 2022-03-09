@@ -22,6 +22,11 @@ resource "buildkite_pipeline" "remote_dev_packer" {
 
     trigger_mode = "none"
   }
+
+  team {
+    slug = "everyone"
+    access_level = "MANAGE_BUILD_AND_READ"
+  }
 }
 
 resource "buildkite_pipeline_schedule" "remote_dev_packer_daily" {
