@@ -1,9 +1,11 @@
 steps:
-  - label: 'Triggering pipelines'
+  - label: "Triggering pipelines"
+    agents:
+      queue: kibana-default
     plugins:
       - chronotc/monorepo-diff#v2.0.4:
           watch:
             - path:
-                - 'pipelines/'
+                - "pipelines/"
               config:
                 trigger: kibana-buildkite-pipelines-deploy

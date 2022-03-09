@@ -1,0 +1,79 @@
+- name: Install fpm
+  community.general.gem:
+    name: fpm
+    version: 1.13.1
+    state: present
+    user_install: no
+
+- name: Disable automatic upgrades
+  lineinfile:
+    path: /etc/apt/apt.conf.d/10periodic
+    search_string: 'APT::Periodic::Enable "0";'
+    line: 'APT::Periodic::Enable "0";'
+    create: yes
+
+- name: Increase file descriptor limits
+  community.general.pam_limits:
+    domain: "*"
+    limit_type: "-"
+    limit_item: nofile
+    value: 500000
+
+- name: Increase process limits
+  community.general.pam_limits:
+    domain: "*"
+    limit_type: "-"
+    limit_item: nofile
+    value: 262144
+
+- name: Install yarn
+  community.general.npm:
+    name: yarn
+    global: yes
+
+- name: Setup ecctl
+  args:
+    executable: /bin/bash
+  shell: |
+    set -eu
+
+    if [[ ! -f /usr/local/bin/ecctl ]]; then
+      mkdir -p /tmp/ecctl
+      cd /tmp/ecctl
+      curl -L https://download.elastic.co/downloads/ecctl/1.6.0/ecctl_1.6.0_linux_amd64.tar.gz -o ecctl.tar.gz
+      tar xzf ecctl.tar.gz
+      mv ecctl /usr/local/bin/ecctl
+      chmod +x /usr/local/bin/ecctl
+      cd -
+      rm -rf ecctl
+    fi
+
+- name: Create ecctl config directory
+  ansible.builtin.file:
+    path: /var/lib/buildkite-agent/.ecctl
+    state: directory
+    owner: buildkite-agent
+    group: buildkite-agent
+
+- name: Configure ecctl
+  template:
+    src: ecctl.json
+    dest: /var/lib/buildkite-agent/.ecctl/config.json
+    owner: buildkite-agent
+    group: buildkite-agent
+
+- name: Create vault role id file
+  when: is_static
+  copy:
+    dest: "/var/lib/buildkite-agent/.vault-role-id"
+    content: "{{ lookup('hashi_vault', 'secret=secret/kibana-issues/dev/buildkite-vault-credentials:role_id') }}"
+    mode: "0600"
+    owner: "buildkite-agent"
+
+- name: Create vault secret id file
+  when: is_static
+  copy:
+    dest: "/var/lib/buildkite-agent/.vault-secret-id"
+    content: "{{ lookup('hashi_vault', 'secret=secret/kibana-issues/dev/buildkite-vault-credentials:secret_id') }}"
+    mode: "0600"
+    owner: "buildkite-agent"

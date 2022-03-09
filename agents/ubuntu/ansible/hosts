@@ -1,0 +1,5 @@
+[local]
+127.0.0.1 ansible_connection=local buildkite_agent_name=buildkite-agent-local-test
+
+[prod]
+worker-1634710.build.hel1-dc3.hetzner.elasticnet.co buildkite_queue=kb-static-ubuntu buildkite_agent_name=kb-static-ubuntu-01

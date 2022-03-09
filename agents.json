@@ -27,6 +27,15 @@
         "exitAfterOneJob": false
       },
       {
+        "queue": "kibana-default",
+        "name": "kibana-default",
+        "machineType": "n2-standard-2",
+        "minimumAgents": 2,
+        "maximumAgents": 100,
+        "idleTimeoutMins": 60,
+        "exitAfterOneJob": false
+      },
+      {
         "queue": "c2-60",
         "name": "kb-c2-60",
         "machineType": "c2-standard-60",
@@ -62,7 +71,8 @@
         "queue": "n2-4",
         "name": "kb-n2-4",
         "machineType": "n2-standard-4",
-        "localSsds": 1
+        "localSsds": 1,
+        "maximumAgents": 2000
       },
       {
         "queue": "jest",
@@ -104,7 +114,7 @@
         "name": "kb-packer",
         "serviceAccount": "buildkite-packer-agent@elastic-kibana-ci.iam.gserviceaccount.com",
         "maximumAgents": 10,
-        "machineType": "e2-small"
+        "machineType": "n2-standard-2"
       },
       {
         "queue": "terraform",
@@ -123,28 +133,51 @@
         "exitAfterOneJob": false
       },
       {
-        "queue": "ci-group-4-idle",
-        "name": "kb-cigroup-4-idle",
+        "queue": "agent-image-test",
+        "name": "kb-agent-image-test",
+        "machineType": "n2-standard-4",
+        "imageFamily": "kb-ubuntu-test"
+      },
+      {
+        "queue": "n2-4-virt",
+        "name": "kb-n2-4-virt",
         "machineType": "n2-standard-4",
         "localSsds": 1,
-        "idleTimeoutMins": 10,
-        "exitAfterOneJob": false
+        "nestedVirtualization": true
       },
       {
-        "queue": "ci-group-4d-idle",
-        "name": "kb-cigroup-4d-idle",
+        "queue": "n2-16-virt",
+        "name": "kb-n2-16-virt",
+        "machineType": "n2-standard-16",
+        "localSsds": 2,
+        "nestedVirtualization": true
+      },
+      {
+        "queue": "n2-4-spot",
+        "name": "kb-n2-4-spot",
+        "machineType": "n2-standard-4",
+        "localSsds": 1,
+        "spot": true
+      },
+      {
+        "queue": "n2d-2",
+        "name": "kb-n2d-2",
+        "machineType": "n2d-standard-2",
+        "localSsds": 1
+      },
+      {
+        "queue": "n2d-4",
+        "name": "kb-n2d-4",
         "machineType": "n2d-standard-4",
-        "localSsds": 1,
-        "idleTimeoutMins": 10,
-        "exitAfterOneJob": false
+        "localSsds": 1
       },
       {
-        "queue": "ci-group-6-idle",
-        "name": "kb-cigroup-6-idle",
-        "machineType": "n2-custom-6-16384",
+        "queue": "n2-4-dev",
+        "name": "kb-n2-4-dev",
+        "machineType": "n2-standard-4",
         "localSsds": 1,
-        "idleTimeoutMins": 10,
-        "exitAfterOneJob": false
+        "maximumAgents": 2000,
+        "imageFamily": "kb-ubuntu-test"
       }
     ]
   }

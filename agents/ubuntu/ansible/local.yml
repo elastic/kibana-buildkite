@@ -1,0 +1,8 @@
+---
+- hosts: local
+  become: true
+  vars:
+    is_static: true
+    is_docker: true
+  roles:
+    - common

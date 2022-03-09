@@ -6,6 +6,8 @@ resource "buildkite_pipeline" "flaky_test_suite_runner" {
   steps:
     - command: .buildkite/pipelines/flaky_tests/pipeline.sh
       label: 'Create pipeline'
+      agents:
+        queue: kibana-default
   EOT
 
   default_branch = "refs/pull/INSERT_PR_NUMBER/head"

@@ -1,0 +1,21 @@
+- name: Create git mirrors directory
+  ansible.builtin.file:
+    path: /var/lib/gitmirrors
+    state: directory
+    owner: buildkite-agent
+    group: buildkite-agent
+
+- name: Setup buildkite agent hooks
+  ansible.builtin.copy:
+    src: ../files/hooks
+    dest: /etc/buildkite-agent
+    owner: buildkite-agent
+    group: buildkite-agent
+
+- name: Configure buildkite-agent
+  when: is_static
+  template:
+    src: buildkite-agent.cfg.j2
+    dest: "/etc/buildkite-agent/buildkite-agent.cfg"
+  notify:
+    - restart-buildkite

@@ -9,10 +9,12 @@ resource "buildkite_pipeline" "demo-env" {
   steps:
     - label: ":pipeline: Pipeline upload"
       command: buildkite-agent pipeline upload .buildkite/pipelines/update_demo_env.yml
+      agents:
+        queue: kibana-default
   EOT
 
   default_branch       = "main"
-  branch_configuration = join(" ", setsubtract(local.current_dev_branches, ["7.15"]))
+  branch_configuration = join(" ", local.current_dev_branches)
 
   provider_settings {
     build_branches      = false
@@ -26,7 +28,7 @@ resource "buildkite_pipeline" "demo-env" {
 }
 
 resource "buildkite_pipeline_schedule" "demo-env-daily" {
-  for_each = setsubtract(local.current_dev_branches, ["7.15"])
+  for_each = toset(local.current_dev_branches)
 
   pipeline_id = buildkite_pipeline.demo-env.id
   label       = "Daily build"

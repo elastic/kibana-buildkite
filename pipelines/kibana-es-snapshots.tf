@@ -9,6 +9,8 @@ resource "buildkite_pipeline" "es_snapshot_build" {
   steps:
     - label: ":pipeline: Pipeline upload"
       command: buildkite-agent pipeline upload .buildkite/pipelines/es_snapshots/build.yml
+      agents:
+        queue: kibana-default
   EOT
 
   default_branch       = "main"
@@ -34,6 +36,8 @@ resource "buildkite_pipeline" "es_snapshot_verify" {
   steps:
     - label: ":pipeline: Pipeline upload"
       command: buildkite-agent pipeline upload .buildkite/pipelines/es_snapshots/verify.yml
+      agents:
+        queue: kibana-default
   EOT
 
   default_branch       = "main"
@@ -59,6 +63,8 @@ resource "buildkite_pipeline" "es_snapshot_promote" {
   steps:
     - label: ":pipeline: Pipeline upload"
       command: buildkite-agent pipeline upload .buildkite/pipelines/es_snapshots/promote.yml
+      agents:
+        queue: kibana-default
   EOT
 
   default_branch       = "main"

@@ -1,0 +1,8 @@
+fetch
+bootstrap.retry
+provision-*.retry
+vault*decrypted.yml
+venv
+/ssh_config
+/.known_hosts
+/vssh

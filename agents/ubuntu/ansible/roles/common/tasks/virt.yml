@@ -1,0 +1,35 @@
+- name: Install Vagrant
+  apt:
+    deb: https://releases.hashicorp.com/vagrant/2.2.19/vagrant_2.2.19_x86_64.deb
+
+- name: Install minikube
+  apt:
+    deb: https://storage.googleapis.com/minikube/releases/latest/minikube_latest_amd64.deb
+
+- name: Add buildkite-agent to libvirt and docker groups
+  ansible.builtin.user:
+    name: buildkite-agent
+    groups:
+      - libvirt
+      - docker
+    append: yes
+
+- name: Set minikube driver
+  shell: su - buildkite-agent -c "minikube config set driver kvm2"
+
+- name: Setup docker config
+  shell: |
+    uid=$(id -u "buildkite-agent")
+    gid=$(id -g "buildkite-agent")
+    lastuid=$((uid + 65536))
+    lastgid=$((gid + 65536))
+
+    usermod --add-subuids "$uid"-"$lastuid" "buildkite-agent"
+    usermod --add-subgids "$gid"-"$lastgid" "buildkite-agent"
+
+    mkdir -p /etc/docker
+    cat > /etc/docker/daemon.json <<EOF
+    {
+      "userns-remap": "buildkite-agent:buildkite-agent"
+    }
+    EOF

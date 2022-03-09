@@ -6,13 +6,18 @@ resource "buildkite_pipeline" "daily" {
   env:
     SLACK_NOTIFICATIONS_CHANNEL: '#kibana-operations-alerts'
     SLACK_NOTIFICATIONS_ENABLED: 'true'
+    REPORT_FAILED_TESTS_TO_GITHUB: 'true'
   steps:
     - label: ":pipeline: Pipeline upload"
       command: buildkite-agent pipeline upload .buildkite/pipelines/hourly.yml
+      agents:
+        queue: kibana-default
   EOT
 
   default_branch       = ""
-  branch_configuration = join(" ", local.daily_branches)
+
+  // See: https://github.com/buildkite/terraform-provider-buildkite/issues/184
+  branch_configuration = "not-a-real-branch ${join(" ", local.daily_branches)}"
 
   provider_settings {
     build_branches      = true
