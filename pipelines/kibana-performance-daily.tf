@@ -24,6 +24,6 @@ resource "buildkite_pipeline_schedule" "single_user_performance_daily_ci" {
   cronline    = "0 * * * * Europe/Berlin"
   branch      = each.value
   env         = {
-    PERF_TEST_COUNT="100"
+    TEST_BROWSER_HEADLESS=1
   }
 }
