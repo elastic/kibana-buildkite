@@ -21,6 +21,7 @@ resource "buildkite_pipeline_schedule" "single_user_performance_daily_ci" {
 
   pipeline_id = buildkite_pipeline.single_user_performance_daily.id
   label       = "Single user daily test"
+  cronline    = "0 * * * * Europe/Berlin"
   branch      = each.value
   env         = {
     PERF_TEST_COUNT="100"
