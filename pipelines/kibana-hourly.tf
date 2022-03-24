@@ -1,3 +1,5 @@
+// This pipeline isn't used anymore
+// But we're deleting the schedule for it and keeping the pipeline just to keep the historical builds
 resource "buildkite_pipeline" "hourly" {
   name        = "kibana / hourly"
   description = "Runs full CI hourly"
@@ -25,13 +27,4 @@ resource "buildkite_pipeline" "hourly" {
     slug = "everyone"
     access_level = "MANAGE_BUILD_AND_READ"
   }
-}
-
-resource "buildkite_pipeline_schedule" "hourly-ci" {
-  for_each = toset(local.hourly_branches)
-
-  pipeline_id = buildkite_pipeline.hourly.id
-  label       = "Hourly build"
-  cronline    = "0 * * * * America/New_York"
-  branch      = each.value
 }

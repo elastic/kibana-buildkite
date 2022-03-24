@@ -8,6 +8,7 @@ resource "buildkite_pipeline" "on-merge" {
     SLACK_NOTIFICATIONS_ENABLED: 'true'
     GITHUB_BUILD_COMMIT_STATUS_ENABLED: 'true'
     GITHUB_COMMIT_STATUS_CONTEXT: 'buildkite/on-merge'
+    REPORT_FAILED_TESTS_TO_GITHUB: 'true'
   steps:
     - label: ":pipeline: Pipeline upload"
       command: buildkite-agent pipeline upload .buildkite/pipelines/on_merge.yml
