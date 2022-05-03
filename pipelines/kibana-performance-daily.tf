@@ -6,6 +6,7 @@ resource "buildkite_pipeline" "single_user_performance" {
   env:
     SLACK_NOTIFICATIONS_CHANNEL: '#kibana-performance-alerts'
     SLACK_NOTIFICATIONS_ENABLED: 'true'
+    BAZEL_CACHE_MODE: 'none'
   steps:
     - label: ":pipeline: Pipeline upload"
       command: buildkite-agent pipeline upload .buildkite/pipelines/performance/daily.yml
@@ -27,6 +28,4 @@ resource "buildkite_pipeline_schedule" "single_user_performance_daily" {
   label       = "Single user daily test"
   cronline    = "0 * * * * Europe/Berlin"
   branch      = buildkite_pipeline.single_user_performance.default_branch
-  env         = {
-  }
 }
