@@ -1,0 +1,5 @@
+steps:
+  - command: agents/.buildkite/cache.sh
+    label: Build Agent Cache Image
+    agents:
+      queue: packer

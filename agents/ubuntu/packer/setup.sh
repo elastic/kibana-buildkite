@@ -115,17 +115,6 @@ cp /tmp/elastic-agent.yml /opt/elastic-agent-install/
 apt-get clean
 rm -rf /var/lib/apt/lists/*
 
-# Bootstrap cache
-su - buildkite-agent <<'EOF'
-set -e
-git clone /var/lib/gitmirrors/https---github-com-elastic-kibana-git /var/lib/buildkite-agent/.kibana
-cd /var/lib/buildkite-agent/.kibana
-git checkout main
-HOME=/var/lib/buildkite-agent bash .buildkite/scripts/packer_cache.sh
-
-cd -
-EOF
-
 sync
 
 sleep 3
