@@ -23,9 +23,9 @@ resource "buildkite_pipeline" "single_user_performance" {
   }
 }
 
-# resource "buildkite_pipeline_schedule" "single_user_performance_daily" {
-#   pipeline_id = buildkite_pipeline.single_user_performance.id
-#   label       = "Single user daily test"
-#   cronline    = "0 * * * * Europe/Berlin"
-#   branch      = buildkite_pipeline.single_user_performance.default_branch
-# }
+resource "buildkite_pipeline_schedule" "single_user_performance_daily" {
+  pipeline_id = buildkite_pipeline.single_user_performance.id
+  label       = "Single user daily test"
+  cronline    = "0 * * * * Europe/Berlin"
+  branch      = buildkite_pipeline.single_user_performance.default_branch
+}
